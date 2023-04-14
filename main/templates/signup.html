@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1> Signup </h1>
+{{error}}
+<form method= 'POST'> 
+    {% csrf_token %}
+        <div class="mb-3">
+          <label for="username" class="form-label">Nombre de usuario</label>
+          <input class="form-control" id="username" aria-describedby="usernameHelp" name="username">
+          <div id="usernameHelp" class="form-text">Ingrese su nombre de usuario</div>
+        </div>
+        <div class="mb-3">
+          <label for="password1" class="form-label">Contraseña</label>
+          <input type="password" class="form-control" id="password1" name="password1">
+        </div>
+        <div class="mb-3">
+            <label for="password2" class="form-label">Confirma tu Contraseña</label>
+            <input type="password" class="form-control" id="password2" name="password2">
+          </div>
+        <button type="submit" class="btn btn-primary">Registrar</button>      
+</form>
+{% endblock content %}
