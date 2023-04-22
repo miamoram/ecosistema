@@ -4,10 +4,7 @@ from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
-
-
-# Create your views here.
-
+from django.views import generic
 
 def home(request):
     return render(request, "index.html")

@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1> Clasificación </h1>
+    <form method="POST" enctype="multipart/form-data">    
+        {% csrf_token %}
+        <div class="mb-3">
+            <label for="file" class="form-label">Carga de imágenes para generar identificación</label>
+            <input class="form-control" type="file" id="file" name="file" multiple>
+        </div>
+        <button type="submit" class="btn btn-primary">Enviar</button>
+    </form>
+    <div class="container " style="padding-top: 5%;">
+        <div class="row">
+            {% for x in data %}            
+            <div class="col-md-4">
+              <div class="thumbnail">
+                {% load static %}
+                <a href="{% static x.name %}">                
+                <img src="{% static x.name %}" alt="Lights" style="width:100%" class="img-fluid">                  
+                </a>
+              </div>
+              {% for y in result %}            
+                <div class="col-md-4">
+                <div class="thumbnail">
+                    <a href="{% static y %}">                
+                    <img src="{% static y %}" alt="Lights" style="width:100%" class="img-fluid">                  
+                    </a>
+                </div>
+                </div>
+                {% endfor %}
+            </div>
+            {% endfor %}
+
+        </div>
+    </div>    
+{% endblock content %}
+

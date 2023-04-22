@@ -12,7 +12,6 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 
 from pathlib import Path
 import os
-import dj_database_url
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -42,7 +41,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'main'
+    'main',
+    'prediction'
 ]
 
 MIDDLEWARE = [
@@ -127,7 +127,17 @@ LOGIN_URL = 'signin'
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
+
 STATIC_URL = '/static/'
+#STATICFILES_DIRS = ("static",)
+
+#MEDIA_URL = '/media/'
+#MEDIA_ROOT = os.path.join(BASE_DIR, 'uploads')
+STATIC_ROOT = os.path.join(os.path.dirname(BASE_DIR), "static")
+STATICFILES_DIRS = (os.path.join(BASE_DIR, "static"),)
+#MEDIA_ROOT = os.path.join(BASE_DIR,'static','media')
+#MEDIA_URL = '/static/media/'
+
 # Following settings only make sense on production and may break development environments.
 if not DEBUG:    # Tell Django to copy statics to the `staticfiles` directory
     # in your application directory on Render.
@@ -135,6 +145,8 @@ if not DEBUG:    # Tell Django to copy statics to the `staticfiles` directory
     # Turn on WhiteNoise storage backend that takes care of compressing static files
     # and creating unique names for each version so they can safely be cached forever.
     STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
+    
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field

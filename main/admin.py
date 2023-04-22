@@ -1,5 +1,4 @@
 from django.contrib import admin
-from .models import trash_can
+from .models import Trash_can, Zone, Space
 
-admin.site.register(trash_can)
-# Register your models here.
+admin.site.register([Trash_can, Zone, Space ])
