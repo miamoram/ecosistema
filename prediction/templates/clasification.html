@@ -15,19 +15,17 @@
             <div class="col-md-4">
               <div class="thumbnail">
                 {% load static %}
-                <a href="{% static x.name %}">                
-                <img src="{% static x.name %}" alt="Lights" style="width:100%" class="img-fluid">                  
+                <a href="{{ x.photo.url }}">                
+                <img src="{{ x.photo.url }}" alt="Lights" style="width:100%" class="img-fluid">                  
                 </a>
-              </div>
-              {% for y in result %}            
+              </div>              
                 <div class="col-md-4">
                 <div class="thumbnail">
-                    <a href="{% static y %}">                
-                    <img src="{% static y %}" alt="Lights" style="width:100%" class="img-fluid">                  
+                    <a href="{{ x.photo_predicted.url }}">                
+                    <img src="{{ x.photo_predicted.url }}" alt="Lights" style="width:100%" class="img-fluid">                  
                     </a>
                 </div>
-                </div>
-                {% endfor %}
+                </div>                
             </div>
             {% endfor %}
 

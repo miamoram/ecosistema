@@ -129,12 +129,13 @@ LOGIN_URL = 'signin'
 
 
 STATIC_URL = '/static/'
-#STATICFILES_DIRS = ("static",)
-
-#MEDIA_URL = '/media/'
-#MEDIA_ROOT = os.path.join(BASE_DIR, 'uploads')
-STATIC_ROOT = os.path.join(os.path.dirname(BASE_DIR), "static")
 STATICFILES_DIRS = (os.path.join(BASE_DIR, "static"),)
+
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'uploads')
+#STATIC_ROOT = os.path.join(os.path.dirname(BASE_DIR), "static")
+
 #MEDIA_ROOT = os.path.join(BASE_DIR,'static','media')
 #MEDIA_URL = '/static/media/'
 

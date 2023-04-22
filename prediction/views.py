@@ -1,14 +1,9 @@
 import io
+import os
 from django.shortcuts import render
-from django.contrib.auth.decorators import login_required
-from django.templatetags.static import static
-from urllib3 import encode_multipart_formdata
-import urllib3
-import shutil
 from .forms import UploadFileForm
 from .models import Residue
 import requests
-from io import StringIO
 from PIL import Image
 from django.conf import settings
 
@@ -25,18 +20,24 @@ def index(request):
                 residue.url = residue.photo.path #TODO actualizar a url real
                 residue.name = file.name
                 residue.save()                    
-                data.append(residue)
-                result.append(predict(residue.photo.path))
+                predict(residue)
+                data.append(residue)                
             context ["data"]= data            
             context ["result"] = result
     elif request.method == "GET":
         data = []    
     return render(request, "clasification.html", context= context )
+from django.core.files import File
 
-def predict(url):    
-    endpoint = "http://127.0.0.1:8001/object-to-img"
+def predict(residue):    
+    #endpoint = "http://127.0.0.1:8001/object-to-img" #TODO url for path
+    endpoint = "https://api-clasificacion.onrender.com"
+
+    """with open("/home/miguel/proyectos/ecosistema/uploads/img/carton.jpeg", 'rb') as fi:
+        residue.photo = File(fi, name=os.path.basename(fi.name))
+        residue.save()"""
     files = {
-    'file': (url, open( url, 'rb')),
+    'file': (os.path.join(settings.MEDIA_ROOT,residue.photo.name), open(os.path.join(settings.MEDIA_ROOT,residue.photo.name), 'rb')),
     'Content-Type': 'image/jpeg'    
     }
     response = requests.post(endpoint, files=files)
@@ -46,13 +47,14 @@ def predict(url):
         print ("Success")
         with io.BytesIO(response.content) as f:
             with Image.open(f) as img:
-                img.save(settings.STATIC_ROOT+("/predicted.jpg"))
+                img.save(os.path.join(settings.MEDIA_ROOT,"img",str(residue.id)+"_predicted.jpg"))                
         """with open(static("predict.jpg"), 'wb') as f:
             response.raw.decode_content = True
             shutil.copyfileobj(response.raw, f)        
         print (response)"""
+        with open(os.path.join(settings.MEDIA_ROOT,"img",str(residue.id)+"_predicted.jpg"), 'rb') as fi:
+            residue.photo_predicted = File(fi, name=os.path.basename(fi.name))
+            residue.save()
     else:
         print ("Failure")
-    print(type(img))
-    return "/predicted.jpg"
-    
+    return residue
