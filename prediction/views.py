@@ -30,12 +30,8 @@ def index(request):
 from django.core.files import File
 
 def predict(residue):    
-    #endpoint = "http://127.0.0.1:8001/object-to-img" #TODO url for path
-    endpoint = "https://api-clasificacion.onrender.com"
-
-    """with open("/home/miguel/proyectos/ecosistema/uploads/img/carton.jpeg", 'rb') as fi:
-        residue.photo = File(fi, name=os.path.basename(fi.name))
-        residue.save()"""
+    
+    endpoint = os.path.join(settings.API_CLASIFICACION, "object-to-img")    
     files = {
     'file': (os.path.join(settings.MEDIA_ROOT,residue.photo.name), open(os.path.join(settings.MEDIA_ROOT,residue.photo.name), 'rb')),
     'Content-Type': 'image/jpeg'    
@@ -48,10 +44,6 @@ def predict(residue):
         with io.BytesIO(response.content) as f:
             with Image.open(f) as img:
                 img.save(os.path.join(settings.MEDIA_ROOT,"img",str(residue.id)+"_predicted.jpg"))                
-        """with open(static("predict.jpg"), 'wb') as f:
-            response.raw.decode_content = True
-            shutil.copyfileobj(response.raw, f)        
-        print (response)"""
         with open(os.path.join(settings.MEDIA_ROOT,"img",str(residue.id)+"_predicted.jpg"), 'rb') as fi:
             residue.photo_predicted = File(fi, name=os.path.basename(fi.name))
             residue.save()
