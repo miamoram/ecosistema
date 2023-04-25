@@ -3,7 +3,9 @@
 <form method="POST" enctype="multipart/form-data">
   {% csrf_token %}
   <div class="mb-3">
-    <label for="file" class="form-label">Carga de imágenes para generar identificación</label>
+    <label for="file" class="form-label"
+      >Carga de imágenes para generar identificación</label
+    >
     <input class="form-control" type="file" id="file" name="file" multiple />
   </div>
   <button type="submit" class="btn btn-primary">Enviar</button>
@@ -21,7 +23,7 @@
       </div>
     </div>
     <div class="col-md-4">
-        <h2>Clasificación</h2>
+      <h2>Clasificación</h2>
       <div class="thumbnail">
         <a href="{{ x.photo_predicted.url }}">
           <img

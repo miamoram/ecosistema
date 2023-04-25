@@ -77,21 +77,16 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'ecosistema.wsgi.application'
 
-
-# Database
-# https://docs.djangoproject.com/en/4.2/ref/settings/#databases
-
 DATABASES = {
     "default": {
         "ENGINE": env("SQL_ENGINE", default="django.db.backends.sqlite3"),
-        "NAME": env("SQL_DATABASE", default=BASE_DIR/"db.sqlite3"),
+        "NAME": env("SQL_DATABASE", default="db.sqlite3"),
         "USER": env("SQL_USER",  default="user"),
         "PASSWORD": env("SQL_PASSWORD",  default="password"),
         "HOST": env("SQL_HOST",  default="localhost"),
         "PORT": env.int("SQL_PORT",  default=5432),
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
