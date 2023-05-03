@@ -13,8 +13,8 @@
 <div class="container" style="padding-top: 5%">
   <div class="row">
     {% for x in data %}
-    <div class="col-md-4">
-      <div class="thumbnail">
+    <div class="col-md-5">
+      <div>
         {% load static %}
         <h2>Imagen cargada</h2>
         <a href="{{ x.photo.url }}">
@@ -22,9 +22,9 @@
         </a>
       </div>
     </div>
-    <div class="col-md-4">
+    <div class="col-md-5">
       <h2>Clasificación</h2>
-      <div class="thumbnail">
+      <div>
         <a href="{{ x.photo_predicted.url }}">
           <img
             src="{{ x.photo_predicted.url }}"
@@ -33,6 +33,13 @@
           />
         </a>
       </div>
+    </div>
+    <div class="col-md-auto">
+      <h2>Resultados</h2>
+      {% for r in x.predicted.result %}
+      {% load mathfilters %}
+      <h4>{{ r.confidence|mul:100|floatformat:2|add:" %" }} {{r.name}}</h4>      
+      {% endfor %}  
     </div>
     {% endfor %}
   </div>
