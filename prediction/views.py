@@ -22,8 +22,8 @@ def index(request):
                 residue.url = residue.photo.path #TODO actualizar a url real
                 residue.name = file.name
                 residue.save()                    
-                #predict_json(residue)
                 predict_img(residue)
+                predict_json(residue)
                 data.append(residue)                
             context ["data"]= data            
             context ["result"] = result
