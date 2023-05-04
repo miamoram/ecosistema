@@ -3,9 +3,23 @@
 <form method="POST" enctype="multipart/form-data">
   {% csrf_token %}
   <div class="mb-3">
-    <label for="file" class="form-label"
-      >Carga de imágenes para generar identificación</label
-    >
+    <label for="space" class="form-label">Selecciona un espacio</label>
+    <select class="form-select" aria-label="Default select example" id="space">
+      {% for op in space %}
+      <option value='{{op.id}}'>{{ op.name }}</option>
+      {% endfor %}
+    </select>    
+  </div>
+  <div class="mb-3">
+    <label for="trash_can" class="form-label">Selecciona una caneca</label>    
+    <select class="form-select" aria-label="Default select example" id="trash_can">
+      {% for op in trash_can %}
+      <option value='{{op.id}}'>{{ op.name }}</option>
+      {% endfor %}      
+    </select>    
+  </div>
+  <div class="mb-3">
+    <label for="file" class="form-label">Carga de imágenes para generar identificación</label>
     <input class="form-control" type="file" id="file" name="file" multiple />
   </div>
   <button type="submit" class="btn btn-primary">Enviar</button>

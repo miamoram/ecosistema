@@ -1,10 +1,18 @@
 {% extends 'base.html' %}
 {% block content %}
-<h1> Signin </h1>
+<h1> Autenticación </h1>
 {{error}}
 <form method= 'POST'> 
     {% csrf_token %}
-    {{ form.as_p }}    
-    <button>Login</button>
+    <div class="mb-3">
+        <label for="username" class="form-label">Nombre de usuario</label>
+          <input class="form-control" name="username" autofocus="" autocapitalize="none" autocomplete="username" maxlength="150" required="True" id="id_username" aria-describedby="usernameHelp">
+          <div id="usernameHelp" class="form-text">Ingrese su nombre de usuario</div>
+    </div>
+    <div class="mb-3">
+        <label for="password" class="form-label">Contraseña</label>
+        <input type="password" class="form-control" id="password" name="password" required="True">
+      </div>
+    <button type="submit" class="btn btn-primary">Login</button>
 </form>
 {% endblock content %}

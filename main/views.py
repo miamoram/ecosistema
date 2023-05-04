@@ -15,9 +15,7 @@ def dashboard(request):
 
 def signup(request):
     if (request.method == 'GET'):
-        return render(request, "signup.html", {
-            "form": UserCreationForm
-        })
+        return render(request, "signup.html")
     else:
         if (request.POST['password1'] == request.POST['password2']):
             try:
@@ -51,7 +49,7 @@ def signin(request):
         if user is None:
           return render(request, "signin.html", {
             "form": AuthenticationForm,
-            "error": "Usuaario o Password no validos"
+            "error": "Usuario o Password no validos"
         })
         else:
             login(request, user)

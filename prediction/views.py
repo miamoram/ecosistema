@@ -2,18 +2,21 @@ import io
 import os
 from django.shortcuts import render
 from .forms import UploadFileForm
-from .models import Residue
+from .models import Residue, Trash_can
+from main.models import Space
 import requests
 from PIL import Image
 from django.conf import settings
-
 
 
 #@login_required
 def index(request):
     context ={}
     data = []
-    result = []
+    #result = []
+    #TODO Consultar los datos del usuario autenticado
+    context["space"] = Space.objects.filter(enable__exact=1).order_by('name')
+    context["trash_can"]= Trash_can.objects.filter(enable__exact=1).order_by('name')            
     if request.method == "POST":
         form = UploadFileForm(request.POST, request.FILES)
         if form.is_valid():
@@ -26,10 +29,11 @@ def index(request):
                 predict_json(residue)
                 data.append(residue)                
             context ["data"]= data            
-            context ["result"] = result
+            #context ["result"] = result
     elif request.method == "GET":
-        data = []    
+        print("ToDO")    
     return render(request, "clasification.html", context= context )
+    
 from django.core.files import File
 
 
