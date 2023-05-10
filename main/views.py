@@ -3,15 +3,29 @@ from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
-from django.http import HttpResponse
-from django.views import generic
+from .models import Space
+import folium
+from  folium.plugins import FastMarkerCluster
+
 
 def home(request):
     return render(request, "index.html")
 
 @login_required
 def dashboard(request):
-    return render(request, "dashboard.html")
+    m = folium.Map(location=[4.6404919,-74.1322655], zoom_start=9)
+    try:
+        spaces = Space.objects.filter(enable=1).order_by('name')                
+        latitudes = [space.lat for space in spaces]
+        longitudes = [space.long for space in spaces]
+        FastMarkerCluster(data=list(zip(latitudes,longitudes))).add_to(m)
+        """for space in spaces:
+            coordinates = (space.lat, space.long)
+            folium.Marker(coordinates).add_to(m)        """
+    except Space.DoesNotExist:
+        print("No se tienen espacios registradas")
+    finally:
+        return render(request, "dashboard.html", {"map": m._repr_html_()})
 
 def signup(request):
     if (request.method == 'GET'):

@@ -2,19 +2,19 @@
 <h1>Clasificación</h1>
 <form method="POST" enctype="multipart/form-data">
   {% csrf_token %}
-  <div class="mb-3">
+  <!--<div class="mb-3">
     <label for="space" class="form-label">Selecciona un espacio</label>
     <select class="form-select" aria-label="Default select example" id="space">
-      {% for op in space %}
-      <option value='{{op.id}}'>{{ op.name }}</option>
+      {% for op in trash_can %}
+      <option value='{{op.id}}'>{{ op.space.name }}</option>
       {% endfor %}
     </select>    
-  </div>
+  </div>-->
   <div class="mb-3">
     <label for="trash_can" class="form-label">Selecciona una caneca</label>    
-    <select class="form-select" aria-label="Default select example" id="trash_can">
+    <select class="form-select" aria-label="Default select example" id="trash_can" name="trash_can">
       {% for op in trash_can %}
-      <option value='{{op.id}}'>{{ op.name }}</option>
+      <option value='{{op.id}}'>{{ op.name }}</option>      
       {% endfor %}      
     </select>    
   </div>

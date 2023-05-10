@@ -7,6 +7,7 @@ from main.models import Space
 import requests
 from PIL import Image
 from django.conf import settings
+from django.shortcuts import get_object_or_404
 
 
 #@login_required
@@ -15,8 +16,7 @@ def index(request):
     data = []
     #result = []
     #TODO Consultar los datos del usuario autenticado
-    context["space"] = Space.objects.filter(enable__exact=1).order_by('name')
-    context["trash_can"]= Trash_can.objects.filter(enable__exact=1).order_by('name')            
+    context["trash_can"]= Trash_can.objects.filter(enable=1).filter(user_id=request.user.id).order_by('name')            
     if request.method == "POST":
         form = UploadFileForm(request.POST, request.FILES)
         if form.is_valid():
@@ -24,10 +24,15 @@ def index(request):
                 residue = Residue(photo=file)
                 residue.url = residue.photo.path #TODO actualizar a url real
                 residue.name = file.name
-                residue.save()                    
-                predict_img(residue)
-                predict_json(residue)
-                data.append(residue)                
+                try:
+                    residue.trash_can = Trash_can.objects.get(pk=form.cleaned_data["trash_can"])
+                except Trash_can.DoesNotExist:
+                    print("Se guarda sin caneca")
+                finally:                    
+                    residue.save()                    
+                    predict_img(residue)
+                    predict_json(residue)
+                    data.append(residue)                
             context ["data"]= data            
             #context ["result"] = result
     elif request.method == "GET":
