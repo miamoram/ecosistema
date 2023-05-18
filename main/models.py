@@ -18,8 +18,8 @@ class Space(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True, null=True)
     enable = models.BooleanField(default=True)
-    long = models.DecimalField(max_digits=9, decimal_places=8)
-    lat = models.DecimalField(max_digits=9, decimal_places=8)
+    long = models.DecimalField(max_digits=11, decimal_places=8)
+    lat = models.DecimalField(max_digits=11, decimal_places=8)
     zone = models.ForeignKey(Zone, on_delete=models.DO_NOTHING)
 
     def __str__(self):
