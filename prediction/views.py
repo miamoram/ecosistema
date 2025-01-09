@@ -31,7 +31,7 @@ def index(request):
                 finally:                    
                     residue.save()                    
                     predict_img(residue)
-                    #predict_json(residue)
+                    predict_json(residue)
                     data.append(residue)                
             context ["data"]= data            
             #context ["result"] = result
